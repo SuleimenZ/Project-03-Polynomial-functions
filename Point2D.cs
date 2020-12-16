@@ -25,7 +25,7 @@ namespace Project_03_Polynomial_functions
         }
         public bool CheckPoint(string point)
         {
-            bool isDigit = point.Replace("-", "").Replace(" ", "").All(char.IsDigit);
+            bool isDigit = point.Replace("-", "").Split(' ').All(d => double.TryParse(d, out double num));
             bool isPoint = (point.Replace("-", "").Split(' ').Length == 2 && (point.Replace("-", "").Split(' ')[0] != ""));
             return (isDigit && isPoint);
         }

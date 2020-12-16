@@ -81,16 +81,18 @@ namespace Project_03_Polynomial_functions
         public void ShowDerivative()
         {
             SolveDerivatives();
-            Console.WriteLine("Derivative:\n");
+            Console.WriteLine("\nDerivative:");
             string derivative = "f'(x) = ";
             string sign = DerivativeSigns.First() ? "" : "-";
-
-            derivative += $"{sign}{Math.Round(DerivativeParameters.First(), 5).ToString().Replace("-", "")}x^{DerivativeParameters.Count() - 1} ";
-
-            for (int i = 1; i < DerivativeParameters.Count() - 1; i++)
+            if (DerivativeParameters.Count() > 1)
             {
-                sign = DerivativeSigns[i] ? "+" : "-";
-                derivative += $"{sign} {Math.Round(DerivativeParameters[i], 5).ToString().Replace("-", "")}x^{DerivativeParameters.Count() - 1 - i} ";
+                derivative += $"{sign}{Math.Round(DerivativeParameters.First(), 5).ToString().Replace("-", "")}x^{DerivativeParameters.Count() - 1} ";
+
+                for (int i = 1; i < DerivativeParameters.Count() - 1; i++)
+                {
+                    sign = DerivativeSigns[i] ? "+" : "-";
+                    derivative += $"{sign} {Math.Round(DerivativeParameters[i], 5).ToString().Replace("-", "")}x^{DerivativeParameters.Count() - 1 - i} ";
+                }
             }
 
             sign = DerivativeSigns.Last() ? "" : "-";

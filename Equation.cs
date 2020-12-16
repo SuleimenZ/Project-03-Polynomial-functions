@@ -15,8 +15,11 @@ namespace Project_03_Polynomial_functions
         public Equation(string inputString)
         {
             InputString = inputString;
-
-            if (CheckEquation())
+            if(inputString == "")
+            {
+                CreateLists();
+            }
+            else if (CheckEquation())
             {
                 CreateLists();
             }
@@ -28,8 +31,8 @@ namespace Project_03_Polynomial_functions
 
         public bool CheckEquation()
         {
-            bool isDigit = InputString.Replace("-", "").Replace(" ", "").All(char.IsDigit);
-            bool isOnlyDigit = (InputString.Replace("-", "").Split(' ').Length == 1 && !(InputString.Replace("-", "").Split(' ')[0] == ""));
+            bool isDigit = InputString.Replace("-", "").Split(' ').All(d => double.TryParse(d, out double num));
+            bool isOnlyDigit = (InputString.Replace("-", "").Split(' ').Length == 1 || (InputString.Replace("-", "").Split(' ')[0] == ""));
             return (isDigit && !isOnlyDigit);
         }
 
@@ -74,7 +77,7 @@ namespace Project_03_Polynomial_functions
                 Parameters[i] = eq.Parameters[i];
             }
         }
-        public void Subtract(Equation eq) // does not change the values 
+        public void Subtract(Equation eq) 
         {
             for (int i = 0; i < eq.Parameters.Count; i++)
             {
