@@ -64,12 +64,24 @@ namespace Project_03_Polynomial_functions
             return answer;
         }
 
+        public double SolveDerivative(double x)
+        {
+            double answer = DerivativeParameters.Last();
+
+            for (int i = 0; i < DerivativeParameters.Count() - 1; i++)
+            {
+                answer += DerivativeParameters[i] * Math.Pow(x, DerivativeParameters.Count() - 1 - i);
+            }
+
+            return answer;
+        }
+
         public void ShowSolution(double x)
         {
             Console.WriteLine($"f({x}) = {Solve(x)}");
         }
 
-        public void SolveDerivatives()
+        public void FindDerivative()
         {
             for (int i = 0; i < Parameters.Count - 1; i++)
             {
@@ -80,7 +92,7 @@ namespace Project_03_Polynomial_functions
 
         public void ShowDerivative()
         {
-            SolveDerivatives();
+            FindDerivative();
             Console.WriteLine("\nDerivative:");
             string derivative = "f'(x) = ";
             string sign = DerivativeSigns.First() ? "" : "-";
@@ -99,6 +111,29 @@ namespace Project_03_Polynomial_functions
             derivative += $"{sign} {Math.Round(DerivativeParameters.Last(), 5).ToString().Replace("-", "")}";
 
             Console.WriteLine(derivative);
+        }
+
+        public void FindRoots(double guess)
+        {
+            bool rootFound = false;
+            double newRoot = guess;
+            for (int i = 1; i <= 100; i++)
+            {
+                double root = newRoot;
+                newRoot = root - (Solve(root) / SolveDerivative(root));
+                double error = (newRoot - root) / newRoot;
+
+                if(error < 0.0001 && Solve(newRoot) == 0)
+                {
+                    Console.WriteLine("Root found for x = " + newRoot);
+                    rootFound = true;
+                    break;
+                }
+            }
+            if(!rootFound)
+            {
+                Console.WriteLine("Algorithm couldn't find the root");
+            }
         }
     }
 }
